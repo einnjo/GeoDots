@@ -1,12 +1,11 @@
 class LocationsController < ApplicationController
   before_action :set_location, only: [:show, :edit, :update, :destroy]
-
   # GET /locations
   # GET /locations.json
   def index
     # perdorm a search on locations with received params
     @locations = Location.search(params[:search])
-    # generate markes for resulting locations
+    # generate markes for resulting location
     set_markers(@locations)
   end
 
@@ -86,6 +85,7 @@ class LocationsController < ApplicationController
       @hash = Gmaps4rails.build_markers(loc_data) do |location, marker|
         marker.lat location.latitude
         marker.lng location.longitude
+        marker.infowindow location.title
     end
   end
 end
